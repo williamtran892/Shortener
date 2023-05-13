@@ -12,7 +12,7 @@ type ViewerStats interface {
 
 type viewerStats struct{}
 
-func NewService() *viewerStats {
+func NewViewerStatsService() *viewerStats {
 	return &viewerStats{}
 }
 
