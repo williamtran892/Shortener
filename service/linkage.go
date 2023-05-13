@@ -7,11 +7,11 @@ package service
 import (
 	"context"
 
-	"github.com/williamtran892/Shortener/endpoints"
+	shortener "github.com/williamtran892/Shortener"
 )
 
 type Linkage interface {
-	GenerateShortenedUrl(ctx context.Context, params endpoints.GenerateUrlRequest) (string, error)
+	GenerateShortenedUrl(ctx context.Context, params shortener.GenerateUrlRequest) (string, error)
 	// GenerateShortenedUrlWithSpecificSrc(ctx context.Context, source, destination string) error
 	// UpdateDestinationURL(ctx context.Context, source, destination string) error
 	// DisableLinkage(ctx context.Context, source string) error
@@ -23,6 +23,6 @@ func NewLinkageService() *linkage {
 	return &linkage{}
 }
 
-func (l *linkage) GenerateShortenedUrl(ctx context.Context, destination string) (string, error) {
+func (l *linkage) GenerateShortenedUrl(ctx context.Context, params shortener.GenerateUrlRequest) (string, error) {
 	return "newShortenedPath", nil
 }

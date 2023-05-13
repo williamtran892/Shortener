@@ -3,14 +3,14 @@ package service
 import (
 	"context"
 
-	"github.com/williamtran892/Shortener/endpoints"
+	shortener "github.com/williamtran892/Shortener"
 )
 
 // Contains all services functions/interfaces responsible for keeping
 // information about visited link
 
 type ViewerStats interface {
-	GetLinkageStats(ctx context.Context, params endpoints.ViewStatsRequest) (string, error)
+	GetLinkageStats(ctx context.Context, params shortener.ViewStatsRequest) (string, error)
 	// ResetLinkageStats(ctx context.Context, source string) error
 }
 
@@ -20,8 +20,8 @@ func NewViewerStatsService() *viewerStats {
 	return &viewerStats{}
 }
 
-func (v *viewerStats) GenerateShortenedUrl(ctx context.Context, params endpoints.ViewStatsRequest) (endpoints.ViewStatsResponse, error) {
-	return endpoints.ViewStatsResponse{
+func (v *viewerStats) GenerateShortenedUrl(ctx context.Context, params shortener.ViewStatsRequest) (shortener.ViewStatsResponse, error) {
+	return shortener.ViewStatsResponse{
 		numOfVisited: 1,
 	}, nil
 }

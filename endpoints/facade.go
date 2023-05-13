@@ -6,15 +6,9 @@ import (
 	"net/http"
 
 	httptransport "github.com/go-kit/kit/transport/http"
+	shortener "github.com/williamtran892/Shortener"
 	"github.com/williamtran892/Shortener/service"
 )
-
-type GenerateUrlRequest struct {
-	destinationURL string
-}
-type GenerateUrlResponse struct {
-	srcURL string
-}
 
 type genUrlEndpoint struct {
 	cfg string
@@ -23,15 +17,15 @@ type genUrlEndpoint struct {
 
 func (e *genUrlEndpoint) DecodeRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	// TODO: read from body to populate destination URL
-	return GenerateUrlRequest{
+	return shortener.GenerateUrlRequest{
 		destinationURL: "google.com",
 	}, nil
 }
 
 func (e *genUrlEndpoint) ProcessRequest(ctx context.Context, r interface{}) (interface{}, error) {
-	params := r.(GenerateUrlRequest)
+	params := r.(shortener.GenerateUrlRequest)
 	srcURL, err := e.svc.GenerateShortenedUrl(ctx, params)
-	return GenerateUrlResponse{
+	return shortener.GenerateUrlResponse{
 		srcURL: srcURL,
 	}, err
 }
@@ -60,13 +54,6 @@ func newGenUrlEndpoint(conf string, svc service.Linkage) *httptransport.Server {
 		options...)
 }
 
-type ViewStatsRequest struct {
-	SourceUrl string
-}
-type ViewStatsResponse struct {
-	numOfVisited int
-}
-
 type viewStatsEndpoint struct {
 	cfg string
 	svc service.ViewerStats
@@ -74,13 +61,13 @@ type viewStatsEndpoint struct {
 
 func (e *viewStatsEndpoint) DecodeRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	// TODO: read from body to populate src URL
-	return ViewStatsRequest{
+	return shortener.ViewStatsRequest{
 		SourceUrl: "newShortenedPath",
 	}, nil
 }
 
 func (e *viewStatsEndpoint) ProcessRequest(ctx context.Context, r interface{}) (interface{}, error) {
-	params := r.(ViewStatsRequest)
+	params := r.(shortener.ViewStatsRequest)
 	stats, err := e.svc.GetLinkageStats(ctx, params)
 	return stats, err
 }
